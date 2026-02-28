@@ -1,0 +1,38 @@
+基础配置:
+  用例类型: AppCase
+  一级模块: TevauPay
+  二级模块: 登录功能
+  用例标题: 正向的登录用例
+
+前置条件:
+  - "context.update({'username':'2948602274@qq.com'}）"
+
+后置条件:
+  - "context.pop('username'）"
+
+用例步骤:
+ - 点击关键字:
+    操作类型: click_element
+#    type: xpath
+#    value: //android.view.View[@content-desc="Login"]
+    页面元素: 登录按钮1
+
+ - 输入邮箱关键字:
+    操作类型: input_text
+#    type: xpath
+#    value: //android.widget.EditText[@text="Your email address"]
+    页面元素: 邮箱输入框
+    text: '{{username}}'
+
+ - 输入验证码关键字:
+    操作类型: input_text
+#    type: xpath
+#    value: //android.widget.EditText[@text="Verification code"]
+    页面元素: 验证码输入框
+    text: 123456
+
+ - 点击登录关键字:
+#    操作类型: click_element
+#    type: xpath
+#    value: //android.view.View[@content-desc="Login"]
+    页面元素: 登录按钮2

@@ -1,0 +1,32 @@
+session_reuse: False
+
+设备列表:
+  appiumServer: #appium地址
+    remoteHost: 127.0.0.1
+    remotePort: 4723
+    remotePath: ''
+  desiredCapabilities:
+    platformName: Android
+    platformVersion: '9'
+    deviceName: emulator-5554
+    appPackage: com.kenny.logistics
+    appActivity: com.kenny.logistics.ui.SplashActivity
+    noReset: True
+    automationName: UiAutomator2
+
+APP页面:
+  登录按钮1:
+    type: xpath
+    value: //android.view.View[@content-desc="Login"]
+
+  邮箱输入框:
+    type: xpath
+    value: //android.widget.EditText[@text="Your email address"]
+
+  验证码输入框:
+    type: xpath
+    value: //android.widget.EditText[@text="Verification code"]
+
+  登录按钮2:
+    type: xpath
+    value: //android.view.View[@content-desc="Login"]
