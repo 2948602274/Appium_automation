@@ -45,7 +45,7 @@ class AppCaseContext:
             self.driver = _global_driver_obj
         else:
             self.driver=self.initDriver()
-        self.keyworads=Keywords(self.driver)
+        self.keywords=Keywords(self.driver)
         return self.keywords
 
     def start(self):
