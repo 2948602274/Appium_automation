@@ -20,15 +20,25 @@ def load_context_from_yaml(folder_path):
         # print(data)
 
 def load_yaml_files(folder_path):
-    suite_folder=os.path.join(folder_path,)
+    yaml_caseInfos=[]
+    suite_folder=os.path.join(folder_path)
     load_context_from_yaml(suite_folder)
     # 读取符合规则的yaml用例数据
     file_names = [(int(f.split("_")[0]), f) for f in os.listdir(suite_folder)
                   if f.endswith(".yaml") and f.split("_")[0].isdigit()]
     # print("文件符合规则的数据", file_names)
     file_names.sort()
-    [f[-11]for f in file_names]
+    file_names=[f[-1]for f in file_names]
+    print("用例文件列表",file_names)
 
+    for file_name in file_names:
+        file_path=os.path.join(folder_path,file_name)
+        print("用例文件路径",file_path)
+        with open(file_path,'r',encoding="utf-8") as rfile:
+            caseinfo=yaml.safe_load(rfile)
+            print("用例数据",caseinfo)
+            yaml_caseInfos.append(caseinfo)
+    return yaml_caseInfos
 
 if __name__ == '__main__':
     # load_context_from_yaml("../../examples/app-cases-yaml")

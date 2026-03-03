@@ -1,18 +1,18 @@
 import copy
 from  HAT.utils.VarRender import refresh
 from HAT.core.globalContext import g_context
-from HAT.parse.YamlCaseParser import read_yaml,load_context_from_yaml
-from HAT.keywords.app_keywords import Keywords
+from HAT.parse.YamlCaseParser import load_yaml_files
 from HAT.context.AppCaseContext import AppCaseContext
 from HAT.extend.script import run_script
 import pytest
 import allure
 from tqdm import tqdm
-
+import os
 
 class TestRunner:
-    load_context_from_yaml("./../examples/app-cases-yaml")
-    data=read_yaml("./examples/app-cases-yaml/login.yaml")
+    # load_context_from_yaml("./../examples/app-cases-yaml")
+    # data=read_yaml("./examples/app-cases-yaml/login.yaml")
+    data=load_yaml_files("../../examples/app-cases-yaml")
     print('执行用例需要用的数据',data)
 
     @pytest.mark.parametrize('caseinfo',data)
@@ -65,10 +65,11 @@ class TestRunner:
                         key = step_value['操作类型']
                     try:
                         key_func=keywords.__getattribute__(key)
+                        key_func(**step_value)
                     except AttributeError:
-                        print("没有找到方法")
-
-                    key_func(**step_value)
+                        if g_context.get_dict("keydir")is not NOne:
+                            keywords.ex_invoke(key=key,step_value=step_value)
+                        os.path.append()
 
             local_context=caseinfo.get("local_context",{})
             context=copy.deepcopy(g_context().show_dict())

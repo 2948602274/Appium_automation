@@ -1,7 +1,6 @@
-from appium import webdriver
 import allure
+import sys
 from HAT.core.globalContext import g_context
-from appium.options.android import UiAutomator2Options
 from appium.webdriver.common.appiumby import AppiumBy
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -67,3 +66,12 @@ class Keywords:
     def input_text(self,**kwargs):
         else_list=self.find_else(**kwargs)
         else_list.send_keys(kwargs['text'])
+
+    def ex_invoke(self,**kwargs):
+        key=kwargs['key']
+        sys.path.append(g_context().get_dict("key_dir"))
+        __import__(key)
+        module=__import__(key)
+        class_=getattr(module,key)
+        key_func=class_(self.driver).__getattribute__(key)
+        key_func(**kwargs["step_value"])
