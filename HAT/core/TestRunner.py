@@ -67,7 +67,7 @@ class TestRunner:
                         key_func=keywords.__getattribute__(key)
                         key_func(**step_value)
                     except AttributeError:
-                        if g_context.get_dict("keydir")is not NOne:
+                        if g_context.get_dict("keydir")is not None:
                             keywords.ex_invoke(key=key,step_value=step_value)
                         os.path.append()
 
