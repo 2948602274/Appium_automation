@@ -1,5 +1,7 @@
 import yaml
 import os
+import uuid
+import copy
 from HAT.core.globalContext import g_context
 
 def read_yaml(file_path):
@@ -40,6 +42,33 @@ def load_yaml_files(folder_path):
             yaml_caseInfos.append(caseinfo)
     return yaml_caseInfos
 
+def yaml_case_parser(config_path):
+    case_names=[]
+    case_infos=[]
+    yaml_caseInfos=load_yaml_files(config_path)
+    print("符合规则的所有yaml用例数据",yaml_caseInfos)
+    for caseinfo in yaml_caseInfos:
+        ddts=caseinfo.get("数据驱动",[])
+        # print("数据驱动", ddts)
+        if len(ddts)>0:
+            caseinfo.pop("数据驱动")
+        if len(ddts)==0:
+            case_name=caseinfo.get("基础配置").get("用例标题",uuid.uuid4().__str__())
+            case_names.append(case_name)
+            case_infos.append(caseinfo)
+        else:
+            for ddt in ddts:
+                new_case=copy.deepcopy(caseinfo)
+                new_case.update({"local_context":ddt})
+                case_name = caseinfo.get("基础配置").get("用例标题", uuid.uuid4().__str__())
+                case_name=f'{case_name}-{ddt.get("描述标题",uuid.uuid4().__str__())}'
+                new_case.get("基础配置").update({"用例标题":case_name})
+                case_names.append(new_case)
+                case_infos.append(case_name)
+    return {
+        "case_infos":case_infos,
+        "case_names":case_names
+    }
+
 if __name__ == '__main__':
-    # load_context_from_yaml("../../examples/app-cases-yaml")
-    load_yaml_files("../../examples/app-cases-yaml")
+    yaml_case_parser("../../examples/app-cases-yaml")

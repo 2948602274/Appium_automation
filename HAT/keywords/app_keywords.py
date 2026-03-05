@@ -61,6 +61,7 @@ class Keywords:
     def click_element(self,**kwargs):
         else_list=self.find_else(**kwargs)
         else_list.click()
+        self.截图()
 
     @allure.step("输入文本")
     def input_text(self,**kwargs):
@@ -75,3 +76,7 @@ class Keywords:
         class_=getattr(module,key)
         key_func=class_(self.driver).__getattribute__(key)
         key_func(**kwargs["step_value"])
+
+    @allure.step("截图")
+    def 截图(self):
+        allure.attach(self.driver.get_screenshot_as_png(),"截图",allure.attachment_type.PNG)

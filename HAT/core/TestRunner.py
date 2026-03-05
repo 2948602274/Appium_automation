@@ -1,19 +1,20 @@
 import copy
 from  HAT.utils.VarRender import refresh
 from HAT.core.globalContext import g_context
-from HAT.parse.YamlCaseParser import load_yaml_files
+from HAT.parse.YamlCaseParser import yaml_case_parser
 from HAT.context.AppCaseContext import AppCaseContext
 from HAT.extend.script import run_script
 import pytest
 import allure
 from tqdm import tqdm
-import os
 
 class TestRunner:
     # load_context_from_yaml("./../examples/app-cases-yaml")
     # data=read_yaml("./examples/app-cases-yaml/login.yaml")
-    data=load_yaml_files("../../examples/app-cases-yaml")
-    print('执行用例需要用的数据',data)
+    # data=load_yaml_files("../../examples/app-cases-yaml")
+    data=yaml_case_parser("../../examples/app-cases-yaml")
+    data=data['case_infos']
+    # print('执行用例需要用的数据',data)
 
     @pytest.mark.parametrize('caseinfo',data)
     def test_case_exceute(self,caseinfo):
@@ -59,6 +60,7 @@ class TestRunner:
                     pbar.update(1)
 
                     context=copy.deepcopy(g_context().show_dict())
+                    context.update(local_context)
                     step_value=eval(refresh(step_value,context))
 
                     with allure.step(step_name):
@@ -69,7 +71,6 @@ class TestRunner:
                     except AttributeError:
                         if g_context.get_dict("keydir")is not None:
                             keywords.ex_invoke(key=key,step_value=step_value)
-                        os.path.append()
 
             local_context=caseinfo.get("local_context",{})
             context=copy.deepcopy(g_context().show_dict())
