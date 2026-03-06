@@ -1,0 +1,60 @@
+# Python cache and bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Build and packaging artifacts
+build/
+dist/
+.eggs/
+*.egg-info/
+pip-wheel-metadata/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Test, lint, and coverage caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.hypothesis/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+
+# IDE and editor files
+.idea/
+.vscode/
+*.iml
+
+# Logs and runtime outputs
+*.log
+logs/
+log/
+reports/
+report/
+allure-results/
+allure-report/
+screenshots/
+output/
+tmp/
+temp/
+
+# Local environment files
+.env
+.env.*
+*.local
+
+# OS junk files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary Office files
+~$*.xls
+~$*.xlsx
