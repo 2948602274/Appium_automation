@@ -80,3 +80,96 @@ class Keywords:
     @allure.step("截图")
     def 截图(self):
         allure.attach(self.driver.get_screenshot_as_png(),"截图",allure.attachment_type.PNG)
+
+    def 断言文本(self,**kwargs):
+        comparators={
+            '>':lambda a,b:a>b,
+            '<':lambda a,b:a<b,
+            '==':lambda a,b:a==b,
+            '>=':lambda a,b:a>=b,
+            '<=':lambda a,b:a<=b,
+            '!=':lambda a,b:a!=b,
+            'in':lambda a,b:a in b,
+        }
+        message=kwargs.get("错误信息",None)
+        compare_type=kwargs.get("断言类型","文本")
+        operators=kwargs.get('比较符','==')
+
+        if operators not in comparators:
+            raise Exception(f'不支持的比较符，请输入正确的比较符{operators}')
+
+        if compare_type=='数字':
+            kwargs['期望结果']=float(kwargs['期望结果'])
+        else:
+            kwargs["期望结果"]=str(kwargs["预期结果"])
+
+        if not comparators[operators](kwargs["实际结果"],kwargs["期望结果"]):
+            if message:
+                raise Exception(message)
+            else:
+                raise Exception(f"断言失败--{kwargs['实际结果']}{operators}{kwargs['实际结果']}")
+
+    def 断言文本相等(self,**kwargs):
+        kwargs.update({"比较符":"=="})
+        # 断言
+        self.断言文本(**kwargs)
+
+    def 断言文本包含(self, **kwargs):
+        """
+        调用 断言文本assert_text方法
+        """
+        kwargs.update({"比较符": "in"})
+        self.断言文本(**kwargs)
+
+    def 断言文本不相等(self, **kwargs):
+        """
+        调用 断言文本assert_text方法
+        """
+        kwargs.update({"比较符": "!="})
+        self.断言文本(**kwargs)
+
+        # ---------------------断言数字方法--------------------------------
+
+    def 断言数字相等(self, **kwargs):
+        """
+        调用 断言文本assert_text方法
+        """
+
+        kwargs.update({"比较符": "==", "断言类型": "数字"})
+        self.断言文本(**kwargs)
+
+    def 断言数字不相等(self, **kwargs):
+        """
+        调用 断言文本assert_text方法
+        """
+        kwargs.update({"比较符": "!=", "断言类型": "数字"})
+        self.断言文本(**kwargs)
+
+    ##3>5
+    def 断言数字大于(self, **kwargs):
+        """
+        调用 断言文本assert_text方法
+        """
+        kwargs.update({"比较符": ">", "断言类型": "数字"})
+        self.断言文本(**kwargs)
+
+    def 断言数字小于(self, **kwargs):
+        """
+        调用 断言文本assert_text方法
+        """
+        kwargs.update({"比较符": "<", "断言类型": "数字"})
+        self.断言文本(**kwargs)
+
+    def 断言数字大于等于(self, **kwargs):
+        """
+        调用 断言文本assert_text方法
+        """
+        kwargs.update({"比较符": ">=", "断言类型": "数字"})
+        self.断言文本(**kwargs)
+
+    def 断言数字小于等于(self, **kwargs):
+        """
+        调用 断言文本assert_text方法
+        """
+        kwargs.update({"比较符": "<=", "断言类型": "数字"})
+        self.断言文本(**kwargs)
