@@ -80,3 +80,10 @@ class Keywords:
     @allure.step("截图")
     def 截图(self):
         allure.attach(self.driver.get_screenshot_as_png(),"截图",allure.attachment_type.PNG)
+
+    def 获取文本元素(self,**kwargs):
+        else_list=self.find_else(**kwargs)
+        ex_data=else_list.text
+        g_context.set_by_dict(kwargs["变量名"],ex_data)
+
+    def 断言文本
