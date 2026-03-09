@@ -8,20 +8,6 @@ from selenium.webdriver.support import expected_conditions as EC
 class Keywords:
     def __init__(self,driver):
         self.driver=driver
-        # cap = {
-        #     "platformName": "Android",
-        #     "platformVersion": "12",
-        #     "deviceName": "127.0.0.1:7555",
-        #     "appPackage": "uni.UNI2317D55",
-        #     "appActivity": "io.dcloud.uniapp.UniAppActivity",
-        #     "noReset": True,
-        #     "unicodeKeyboard": True,
-        #     "resetKeyboard": True,
-        #     "automationName": "UiAutomator2"
-        # }
-        # options = UiAutomator2Options().load_capabilities(cap)
-        #
-        # self.driver = webdriver.Remote("http://127.0.0.1:4723", options=options)
 
     @allure.step("等待元素出现")
     def wait_for_element_presence(self, locator):
